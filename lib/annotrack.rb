@@ -69,6 +69,10 @@ class Annotrack
     "#{status}: #{story['name']} (#{story['id']}). "
   end
 
+  def owner_filter
+    search_filters[:owner] << %Q("#{@user_name}")
+  end
+
   def search_filters
     {:owner => 'owner:', :state => 'state:', :include_done => 'includedone:'}
   end
@@ -84,11 +88,6 @@ class Annotrack
     @settings ||= YAML.load_file settings_file
   end
 
-  def stories_for_filter(filter)
-    response = self.class.get "/#{@project_id}/stories", :query => {:filter => filter}
-    response['response']['stories']['story']
-  end
-
   def started_stories_filter
     owner_filter << ' ' << search_filters[:state] << story_states['started']
   end
@@ -99,13 +98,14 @@ class Annotrack
     all_stories.reject! {|story| Chronic.parse(story['accepted_at']) != @date}
   end
 
+  def stories_for_filter(filter)
+    response = self.class.get "/#{@project_id}/stories", :query => {:filter => filter}
+    response['response']['stories']['story']
+  end
+
   def story_states
     states = %w(unstarted started finished delivered accepted rejected)
     Hash[*(states.zip(states).flatten)]
-  end
-
-  def owner_filter
-    search_filters[:owner] << %Q("#{@user_name}")
   end
 end
 

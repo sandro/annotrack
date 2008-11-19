@@ -1,12 +1,12 @@
 Annotrack
 =======
-Annotrack generates a report for all of accepted Pivotal Tracker stories that a user worked on for a given day.
+Annotrack generates a report for all of the accepted Pivotal Tracker stories that a user worked on for a given day.
 
 Usage
 -----
-    $ annotrack --user-name sandro --project-id 123
+    $ annotrack --username sandro --project 123
     ACCEPTED: Users can view other user's profiles (263028). 
-    ACCEPTED: Guests cannot view user's profiles (263028). 
+    ACCEPTED: Guests cannot view user's profiles (263029). 
 
 Use --help for more information:
 

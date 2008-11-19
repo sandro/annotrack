@@ -95,7 +95,7 @@ class Annotrack
   def stories_for_date
     #all_stories = accepted_stories.merge(delivered_stories).merge(finished_stories).merge(started_stories)
     all_stories = Array(accepted_stories)
-    all_stories.reject! {|story| Chronic.parse(story['accepted_at']) != @date}
+    all_stories.reject {|story| Chronic.parse(story['accepted_at']) != @date}
   end
 
   def stories_for_filter(filter)

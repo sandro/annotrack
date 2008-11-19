@@ -93,14 +93,14 @@ class Annotrack
   end
 
   def stories_for_date
-    #all_stories = accepted_stories.merge(delivered_stories).merge(finished_stories).merge(started_stories)
-    all_stories = Array(accepted_stories)
+    all_stories = accepted_stories
     all_stories.reject {|story| Chronic.parse(story['accepted_at']) != @date}
   end
 
   def stories_for_filter(filter)
     response = self.class.get "/#{@project_id}/stories", :query => {:filter => filter}
-    response['response']['stories']['story']
+    stories = response['response']['stories']['story']
+    stories.is_a?(Array) ? stories : [stories]
   end
 
   def story_states

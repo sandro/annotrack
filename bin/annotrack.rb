@@ -9,7 +9,6 @@ end
 
 require 'trollop'
 require 'date'
-require 'chronic'
 require File.expand_path(File.join(File.dirname(__FILE__), %w(.. lib annotrack)))
 
 opts = Trollop::options do

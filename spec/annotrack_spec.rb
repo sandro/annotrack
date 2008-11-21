@@ -68,6 +68,12 @@ describe Annotrack do
       @track.should_receive(:stories_for_filter).with("started")
       @track.started_stories
     end
+
+    it 'should return an empty array when no stories are found' do
+      @track.class.stub!(:get).and_return({"response"=>{"message"=>"0 stories found for filter 'owner:\"sandro\" state:accepted includedone:true'", "stories"=>"\n  ", "success"=>"true"}})
+      response = @track.send(:stories_for_filter, 'filter')
+      response.should be_empty
+    end
   end
 
   describe 'filters' do

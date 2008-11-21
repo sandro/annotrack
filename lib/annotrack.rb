@@ -100,7 +100,9 @@ class Annotrack
   def stories_for_filter(filter)
     response = self.class.get "/#{@project_id}/stories", :query => {:filter => filter}
     stories = response['response']['stories']['story']
-    stories.is_a?(Array) ? stories : [stories]
+    stories = [stories] unless stories.is_a?(Array)
+    stories.compact
+    # compact is a work around for {"response"=>{"message"=>"0 stories found for filter 'owner:\"sandro\" state:accepted includedone:true'", "stories"=>"\n  ", "success"=>"true"}}
   end
 
   def story_states
